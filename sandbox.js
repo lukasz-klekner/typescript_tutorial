@@ -5,7 +5,7 @@ var Invoice = /** @class */ (function () {
         this.amount = amount;
     }
     Invoice.prototype.format = function () {
-        console.log("".concat(this.client, " owes ").concat(this.amount, " for ").concat(this.details));
+        return "".concat(this.client, " owes ").concat(this.amount, " for ").concat(this.details);
     };
     return Invoice;
 }());
@@ -16,9 +16,24 @@ var Payment = /** @class */ (function () {
         this.amount = amount;
     }
     Payment.prototype.format = function () {
-        console.log("".concat(this.recipient, " owes ").concat(this.amount, " for ").concat(this.details));
+        return "".concat(this.recipient, " owes ").concat(this.amount, " for ").concat(this.details);
     };
     return Payment;
+}());
+var ListTemplate = /** @class */ (function () {
+    function ListTemplate(container) {
+        this.container = container;
+    }
+    ListTemplate.prototype.render = function (item, heading, pos) {
+        var li = document.createElement('li');
+        var h4 = document.createElement('h4');
+        h4.innerText = heading;
+        li.append(h4);
+        var p = document.createElement('p');
+        p.innerText = item.format();
+        li.append(li);
+    };
+    return ListTemplate;
 }());
 var form = document.querySelector('.new-item-form');
 var type = document.querySelector('#type');

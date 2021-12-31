@@ -1,8 +1,8 @@
 interface HasFormatting {
-  format(a: string): void
+  format(): string
 }
 
-class Invoice {
+class Invoice implements HasFormatting {
   constructor(
     readonly client: string,
     private details: string,
@@ -10,11 +10,11 @@ class Invoice {
   ) {}
 
   format() {
-    console.log(`${this.client} owes ${this.amount} for ${this.details}`)
+    return `${this.client} owes ${this.amount} for ${this.details}`
   }
 }
 
-class Payment {
+class Payment implements HasFormatting {
   constructor(
     readonly recipient: string,
     private details: string,
@@ -22,7 +22,7 @@ class Payment {
   ) {}
 
   format() {
-    console.log(`${this.recipient} owes ${this.amount} for ${this.details}`)
+    return `${this.recipient} owes ${this.amount} for ${this.details}`
   }
 }
 
