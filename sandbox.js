@@ -31,7 +31,13 @@ var ListTemplate = /** @class */ (function () {
         li.append(h4);
         var p = document.createElement('p');
         p.innerText = item.format();
-        li.append(li);
+        li.append(p);
+        if (pos === 'start') {
+            this.container.prepend(li);
+        }
+        else {
+            this.container.append(li);
+        }
     };
     return ListTemplate;
 }());
@@ -40,6 +46,9 @@ var type = document.querySelector('#type');
 var toFrom = document.querySelector('#tofrom');
 var details = document.querySelector('#details');
 var amount = document.querySelector('#amount');
+var ul = document.querySelector('.item-list');
+console.log(ul);
+var list = new ListTemplate(ul);
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     var docs;
@@ -49,7 +58,7 @@ form.addEventListener('submit', function (e) {
     else {
         docs = new Payment(toFrom.value, details.value, amount.valueAsNumber);
     }
-    console.log(docs);
+    list.render(docs, type.value, 'end');
 });
 var me = {
     name: 'Lukasz',

@@ -26,12 +26,38 @@ class Payment implements HasFormatting {
   }
 }
 
+class ListTemplate {
+  constructor(private container: HTMLUListElement) {}
+
+  render(item: HasFormatting, heading: string, pos: 'start' | 'end') {
+    const li = document.createElement('li')
+
+    const h4 = document.createElement('h4')
+    h4.innerText = heading
+    li.append(h4)
+
+    const p = document.createElement('p')
+    p.innerText = item.format()
+    li.append(p)
+
+    if (pos === 'start') {
+      this.container.prepend(li)
+    } else {
+      this.container.append(li)
+    }
+  }
+}
+
 const form = document.querySelector('.new-item-form') as HTMLFormElement
 
 const type = document.querySelector('#type') as HTMLFormElement
 const toFrom = document.querySelector('#tofrom') as HTMLSelectElement
 const details = document.querySelector('#details') as HTMLInputElement
 const amount = document.querySelector('#amount') as HTMLInputElement
+
+const ul = document.querySelector('.item-list') as HTMLUListElement
+console.log(ul)
+const list = new ListTemplate(ul)
 
 form.addEventListener('submit', (e: Event) => {
   e.preventDefault()
@@ -43,7 +69,7 @@ form.addEventListener('submit', (e: Event) => {
     docs = new Payment(toFrom.value, details.value, amount.valueAsNumber)
   }
 
-  console.log(docs)
+  list.render(docs, type.value, 'end')
 })
 
 // interfaces
