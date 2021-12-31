@@ -9,11 +9,17 @@ var Invoice = /** @class */ (function () {
     };
     return Invoice;
 }());
-var invOne = new Invoice('mario', 'work on the mario website', 250);
-var invTwo = new Invoice('mario', 'work on the mario website', 300);
-var invoices = [];
-invoices.push(invOne, invTwo);
-console.log(invoices);
+var Payment = /** @class */ (function () {
+    function Payment(recipient, details, amount) {
+        this.recipient = recipient;
+        this.details = details;
+        this.amount = amount;
+    }
+    Payment.prototype.format = function () {
+        console.log("".concat(this.recipient, " owes ").concat(this.amount, " for ").concat(this.details));
+    };
+    return Payment;
+}());
 var form = document.querySelector('.new-item-form');
 var type = document.querySelector('#type');
 var toFrom = document.querySelector('#tofrom');
@@ -21,7 +27,14 @@ var details = document.querySelector('#details');
 var amount = document.querySelector('#amount');
 form.addEventListener('submit', function (e) {
     e.preventDefault();
-    console.log(type.value, toFrom.value, details.value, amount.valueAsNumber);
+    var docs;
+    if (type.value === 'invoice') {
+        docs = new Invoice(toFrom.value, details.value, amount.valueAsNumber);
+    }
+    else {
+        docs = new Payment(toFrom.value, details.value, amount.valueAsNumber);
+    }
+    console.log(docs);
 });
 var me = {
     name: 'Lukasz',

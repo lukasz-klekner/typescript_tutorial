@@ -1,3 +1,7 @@
+interface HasFormatting {
+  format(a: string): void
+}
+
 class Invoice {
   constructor(
     readonly client: string,
@@ -10,12 +14,17 @@ class Invoice {
   }
 }
 
-const invOne = new Invoice('mario', 'work on the mario website', 250)
-const invTwo = new Invoice('mario', 'work on the mario website', 300)
+class Payment {
+  constructor(
+    readonly recipient: string,
+    private details: string,
+    public amount: number
+  ) {}
 
-const invoices: Invoice[] = []
-invoices.push(invOne, invTwo)
-console.log(invoices)
+  format() {
+    console.log(`${this.recipient} owes ${this.amount} for ${this.details}`)
+  }
+}
 
 const form = document.querySelector('.new-item-form') as HTMLFormElement
 
@@ -26,7 +35,15 @@ const amount = document.querySelector('#amount') as HTMLInputElement
 
 form.addEventListener('submit', (e: Event) => {
   e.preventDefault()
-  console.log(type.value, toFrom.value, details.value, amount.valueAsNumber)
+  let docs: HasFormatting
+
+  if (type.value === 'invoice') {
+    docs = new Invoice(toFrom.value, details.value, amount.valueAsNumber)
+  } else {
+    docs = new Payment(toFrom.value, details.value, amount.valueAsNumber)
+  }
+
+  console.log(docs)
 })
 
 // interfaces
