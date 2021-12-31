@@ -23,3 +23,18 @@ form.addEventListener('submit', function (e) {
     e.preventDefault();
     console.log(type.value, toFrom.value, details.value, amount.valueAsNumber);
 });
+var me = {
+    name: 'Lukasz',
+    age: 27,
+    speak: function (text) {
+        console.log(text);
+    },
+    spend: function (amount) {
+        console.log('I spent', amount);
+        return amount;
+    }
+};
+var greetPerson = function (person) {
+    console.log("Hello ".concat(person.name));
+};
+greetPerson(me);

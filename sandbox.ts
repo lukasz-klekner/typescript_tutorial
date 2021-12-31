@@ -28,3 +28,29 @@ form.addEventListener('submit', (e: Event) => {
   e.preventDefault()
   console.log(type.value, toFrom.value, details.value, amount.valueAsNumber)
 })
+
+// interfaces
+interface isPerson {
+  name: string
+  age: number
+  speak(a: string): void
+  spend(a: number): number
+}
+
+const me: isPerson = {
+  name: 'Lukasz',
+  age: 27,
+  speak(text: string): void {
+    console.log(text)
+  },
+  spend(amount: number) {
+    console.log('I spent', amount)
+    return amount
+  },
+}
+
+const greetPerson = (person: isPerson) => {
+  console.log(`Hello ${person.name}`)
+}
+
+greetPerson(me)
