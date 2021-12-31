@@ -1,3 +1,12 @@
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var Invoice = /** @class */ (function () {
     function Invoice(client, details, amount) {
         this.client = client;
@@ -52,11 +61,13 @@ var list = new ListTemplate(ul);
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     var docs;
+    var values;
+    values = [toFrom.value, details.value, amount.valueAsNumber];
     if (type.value === 'invoice') {
-        docs = new Invoice(toFrom.value, details.value, amount.valueAsNumber);
+        docs = new (Invoice.bind.apply(Invoice, __spreadArray([void 0], values, false)))();
     }
     else {
-        docs = new Payment(toFrom.value, details.value, amount.valueAsNumber);
+        docs = new (Payment.bind.apply(Payment, __spreadArray([void 0], values, false)))();
     }
     list.render(docs, type.value, 'end');
 });
